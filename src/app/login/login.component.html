@@ -1,0 +1,37 @@
+<div class='bold-line'></div>
+<div class='container'>
+  <div class="background-image">
+    <div class='window'>
+      <div class='overlay'></div>
+      <div class='content'>
+        <div class='welcome'>Вход</div>
+        <div class='input-fields'>
+    <form class="login" [formGroup]="loginForm" (ngSubmit)="proceedLogin()" >
+      <div class="mb-3">
+      <mat-form-field>
+        <mat-label>Потребителксо име</mat-label>
+        <input class='input-line full-width' matInput formControlName="username">
+      </mat-form-field>
+      </div>
+      <div class="mb-3">
+      <mat-form-field>
+        <mat-label>Парола</mat-label>
+        <input class='input-line full-width' type="password" matInput formControlName="password">
+      </mat-form-field>
+      </div>
+      <div>
+        <button type="submit" class='ghost-round full-width'>Вход</button>
+      </div>
+    </form>
+        </div>
+        <div class='spacing'>Нямаш регистрация?</div>
+        <div>
+          <button (click)="onClick()" class='ghost-round full-width'>Регистрирай се</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

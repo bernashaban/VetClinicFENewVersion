@@ -1,0 +1,119 @@
+.background-image {
+  background-image: url("https://img.freepik.com/free-photo/portrait-collection-adorable-puppies_53876-145628.jpg?w=1380&t=st=1686234576~exp=1686235176~hmac=ebbc21cb169f41525bc3df5c4b8f1b116f1d6b0bef6fa938cecf1c5c65f690b0");
+  background-size: 100%;
+  background-position: bottom;
+  height: 550px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: center;
+  padding: 30px;
+  overflow: hidden;
+  box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.3);
+  filter: sepia(50%);
+}
+.centered-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  color: #000000;
+  font-family: roboto;
+  /*text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);*/
+  background: -webkit-linear-gradient(#2886ad, #b7dafc);
+  background: linear-gradient(#b7e2fc, #2886ad);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.text{
+  align-items: center;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  text-align: center;
+  font-family: roboto;
+  background-color: rgb(183, 218, 252);
+  padding: 20px;
+  border-radius: 10px;
+}
+.container {
+  /*width: 100%;*/
+  /*height: 100vh;*/
+  /*display: flex;*/
+  /*flex-direction: column;*/
+  /*justify-content: center;*/
+  /*align-items: center;*/
+}
+
+h1 {
+  font-size: 50px;
+  text-transform: uppercase;
+  font-family: 'Gambetta', serif;
+  letter-spacing: -3px;
+  line-height: 70pt;
+  transition: 700ms ease;
+  font-variation-settings: "wght" 311;
+  margin-bottom: 0.8rem;
+  color: #000000;
+  background-color: rgb(183, 218, 252);
+  outline: none;
+  text-align: center;
+  padding: 20px;
+  border-radius: 10px;
+  opacity: 0.9;
+}
+
+h1:hover {
+  font-variation-settings: "wght" 582;
+  letter-spacing: 1px;
+}
+h3:hover {
+  font-variation-settings: "wght" 582;
+  letter-spacing: 1px;
+}
+
+p {
+  font-family: 'Gambetta', serif;
+  font-size: 140%;
+  line-height: 150%;
+  text-align: center;
+  color: #000000;
+  letter-spacing: .5px;
+  padding-bottom: 5px;
+}
+
+h3{
+  font-size: 40px;
+  text-transform: uppercase;
+  font-family: 'Gambetta', serif;
+  letter-spacing: -3px;
+  line-height: 70pt;
+  transition: 700ms ease;
+  font-variation-settings: "wght" 311;
+  margin-bottom: 0.8rem;
+  margin-top: 0.8rem;
+  color: #000000;
+  background-color: rgb(183, 218, 252);
+  outline: none;
+  text-align: center;
+  padding: 20px;
+  border-radius: 10px;
+  opacity: 0.9;
+}
+.example-card {
+  font-family: 'Gambetta', serif;
+  background-color: rgb(183, 218, 252);
+  max-width: 30.5%;
+  margin-bottom: 50px;
+  float: left;
+  opacity: 0.9;
+}
+
+.example-header-image {
+  background-size: cover;
+}
