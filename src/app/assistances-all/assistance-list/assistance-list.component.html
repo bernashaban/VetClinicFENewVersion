@@ -1,0 +1,41 @@
+<div class="mat-elevation-z8">
+  <mat-form-field class="search-form-field">
+    <input matInput [(ngModel)]="searchKey" placeholder="Търсене" autocomplete="off" (keyup)="applyFilter()">
+    <button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+      <mat-icon>close</mat-icon></button></mat-form-field>
+
+  <table mat-table matSort [dataSource]="dataSource">
+
+    <ng-container matColumnDef="type">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef> Тип услуга </th>
+      <td mat-cell  *matCellDef="let element">{{getServiceType(element.serviceType)}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef> Име </th>
+      <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef> Цена </th>
+      <td mat-cell *matCellDef="let element">{{element.price}} лв.</td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell mat-sort-header *matHeaderCellDef> Редактиране </th>
+      <td mat-cell *matCellDef="let element">
+        <a *ngIf="element.roles!='ROLE_VET,ROLE_ADMIN'" (click)="updateElement(element.username)"
+           mat-raised-button color="primary"><mat-icon>edit</mat-icon></a>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                 showFirstLastButtons
+                 aria-label="Select page of periodic elements">
+  </mat-paginator>
+</div>

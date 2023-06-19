@@ -1,0 +1,48 @@
+<div class="search-div">
+  <button mat-raised-button [routerLink]="['/']">
+    <mat-icon>add</mat-icon>Create
+  </button>
+  <mat-form-field class="search-form-field" floatLabel="never">
+    <input matInput [(ngModel)]="searchKey" placeholder="Search" autocomplete="off" (keyup)="applyFilter()">
+    <button mat-button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+<div class="mat-elevation-z8">
+  <mat-table [dataSource]="listData" matSort>
+    <ng-container matColumnDef="fullName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Име</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.fullName}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="speciality">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Специалност</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.speciality}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="universityInfo">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Университет</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.universityInfo}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="birthDate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Дата на раждане</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{prettyDate(element.birthDate)}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Имейл</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.email}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="username">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Потребителско име</mat-header-cell>
+      <mat-cell *matCellDef="let element">{{element.username}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef = "let row">
+        <button mat-icon-button color="warn" (click)="onDelete(row.id)"><mat-icon>delete_outline</mat-icon></button>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" showFirstLastButtons></mat-paginator>
+</div>

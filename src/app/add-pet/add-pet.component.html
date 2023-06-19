@@ -1,0 +1,43 @@
+<div class='bold-line'></div>
+<div class='container'>
+  <div class="background-image">
+    <div class='window'>
+      <div class='overlay'></div>
+      <div class='content'>
+        <div class='welcome'>Добави любимец</div>
+        <div class='input-fields'>
+          <form (ngSubmit)="onPetSubmit()" class="form-group ">
+            <div class="mb-3">
+              <input type="text" class='input-line full-width' placeholder="Име" id="name"
+                     [(ngModel)]="name" name="name" required>
+            </div>
+            <div class="mb-3">
+              <input type="text" class='input-line full-width' placeholder="Години" id="age"
+                     [(ngModel)]="age" name="age" required>
+              <div class='spacing'>Ако любимеца ви е под 1 година, въведете 0</div>
+            </div>
+            <div class="mb-3">
+              <label class='input-line full-width' for="gender">Пол:</label>
+              <select id="gender" class='input-line full-width' [(ngModel)]="selectedGender" (change)="selectGender()"
+                      name="gender" >
+                <option>мъжки</option>
+                <option>женски</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class='input-line full-width' for="type">Тип:</label>
+              <select id="type" class='input-line full-width' [(ngModel)]="selectedType" (change)="selectType()" name="type">
+                <option>котка</option>
+                <option>куче</option>
+                <option>заек</option>
+                <option>друго</option>
+              </select>
+            </div>
+            <button type="submit" class='ghost-round full-width'>Добави</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+

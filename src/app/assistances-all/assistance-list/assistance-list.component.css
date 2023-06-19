@@ -1,0 +1,17 @@
+.mat-elevation-z8{
+  width: 900px;
+
+}
+
+.search-form-field{
+  margin-left: 25px;
+  width: 75%;
+}
+.search-div{
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  background-color: #b6e0fb;
+}
+.mat-raised-button {
+  margin-left: 25px;
+}

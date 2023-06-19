@@ -1,0 +1,52 @@
+<div class='bold-line'></div>
+<div class='container'>
+  <div class="background-image">
+    <div class='window'>
+      <div class='overlay'></div>
+      <div class='content'>
+        <div class='welcome'>Запази час</div>
+        <div class='input-fields'>
+          <form (ngSubmit)="onAppointmentSubmit()" class="form-group ">
+            <div class="mb-3" >
+              <label class='input-line full-width' for="pet">Любимец:</label>
+              <select id="pet" class='input-line full-width' [(ngModel)]="selectedPet" (change)="selectPet()" name="pet" >
+                <option *ngFor="let pet of pets" [ngValue]="pet"  >{{ pet.name }}</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class='input-line full-width' for="vet">Ветеринар:</label>
+              <select id="vet" class='input-line full-width' [(ngModel)]="selectedVetId" (change)="selectVet()"
+                      name="vet" >
+                <option *ngFor="let vet of vets" [value]="vet"  >Д-р {{ vet.fullName }}</option>
+              </select>
+            </div>
+            <div class="mb-3" *ngIf="selectedVetId">
+              <label class='input-line full-width' for="dates">Дата:</label>
+              <select id="dates" class='input-line full-width' [(ngModel)]="selectedDate" (change)="selectDate()" name="dates">
+                <option *ngFor="let entry of dateTimeMap | keyvalue" >
+                  {{ entry.key }}
+                </option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <div>
+                <div *ngFor="let entry of dateTimeMap | keyvalue">
+                  <div *ngIf="entry.key === selectedDate">
+                    <label class='input-line full-width'>Час:</label><br>
+                    <label class='times' *ngFor="let time of entry.value">
+                      <input type="radio" checked="checked" name="radio">
+                      <span class="checkmark"></span>
+                      {{time}}
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <button type="submit" class='ghost-round full-width'>Запази</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+

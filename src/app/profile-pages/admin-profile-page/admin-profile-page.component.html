@@ -1,0 +1,95 @@
+<div class='bold-line' xmlns="http://www.w3.org/1999/html"></div>
+<div class='container'>
+  <div class="background-image">
+    <div class='window'>
+      <div class='overlay'></div>
+      <div class='content'>
+        <div class='welcome'>{{ currentUser.fullName }}</div>
+        <div class='input-fields'>
+          <div>
+            <p class="input-line ">Имейл: {{ currentUser.email }}</p>
+            <p class="input-line ">Потребителско име: {{ currentUser.username }}</p>
+            <p class="input-line ">Телефон: {{ currentUser.phoneNum }}</p>
+            <p class="input-line ">Адрес: {{ currentUser.address }}</p>
+
+            <div class="mat-elevation-z8">
+              <table mat-table matSort [dataSource]="dataSource">
+
+                <ng-container matColumnDef="fullName">
+                  <th mat-header-cell mat-sort-header *matHeaderCellDef> Име</th>
+                  <td mat-cell *matCellDef="let element"> {{element.fullName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="address">
+                  <th mat-header-cell mat-sort-header *matHeaderCellDef> Адрес</th>
+                  <td mat-cell *matCellDef="let element"> {{element.address}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="email">
+                  <th mat-header-cell mat-sort-header *matHeaderCellDef> Имейл</th>
+                  <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="username">
+                  <th mat-header-cell mat-sort-header *matHeaderCellDef> Потребителксо име</th>
+                  <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="phoneNum">
+                  <th mat-header-cell mat-sort-header *matHeaderCellDef> Телефонен номер</th>
+                  <td mat-cell *matCellDef="let element"> {{element.phoneNum}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="roles">
+                  <th mat-header-cell mat-sort-header *matHeaderCellDef> Права</th>
+                  <td mat-cell *matCellDef="let element"> {{element.roles}} </td>
+                </ng-container>
+
+
+                <ng-container matColumnDef="active">
+                  <th mat-header-cell mat-sort-header *matHeaderCellDef> Състояние на акаунт</th>
+                  <td mat-cell *matCellDef="let element"> {{element.active ? 'Active' : 'Not active'}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="action">
+                  <th mat-header-cell mat-sort-header *matHeaderCellDef> Редактиране</th>
+                  <td mat-cell *matCellDef="let element">
+                    <a *ngIf="element.roles!='ROLE_VET,ROLE_ADMIN'" (click)="updateUser(element.username)"
+                       mat-raised-button color="primary">
+                      <mat-icon>edit</mat-icon>
+                    </a>
+                  </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+
+              <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                             showFirstLastButtons
+                             aria-label="Select page of periodic elements">
+              </mat-paginator>
+            </div>
+
+          </div>
+        </div>
+        <div>
+          <button (click)="onLogoutClicked()" class='ghost-round full-width'>Изход</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
