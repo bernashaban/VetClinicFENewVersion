@@ -16,12 +16,12 @@ const routes: Routes = [
   {path:'',component:HomeComponent},
   {path:'register',component:RegisterComponent},
   {path:'login',component:LoginComponent},
-  {path:'add-appointment',component:AddAppointmentComponent},
+  {path:'add-appointment',component:AddAppointmentComponent, canActivate:[AuthGuard]},
   {path:'list-services',component:AssistanceListComponent},
   {path:'list-articles',component:ArticleListComponent},
-  {path:'owner-profile-page',component:OwnerProfilePageComponent},
-  {path:'admin-profile-page',component:AdminProfilePageComponent},
-  {path:'vet-profile-page',component:VetProfilePageComponent},
+  {path:'owner-profile-page',component:OwnerProfilePageComponent, canActivate:[AuthGuard]},
+  {path:'admin-profile-page',component:AdminProfilePageComponent, canActivate:[AuthGuard]},
+  {path:'vet-profile-page',component:VetProfilePageComponent, canActivate:[AuthGuard]},
   {path:'user',component:UserListingComponent,canActivate:[AuthGuard]},
 ]
 

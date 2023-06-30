@@ -1,139 +1,182 @@
-import {Component, OnInit} from '@angular/core';
-import {Appointment, AppointmentRequest, AppointmentService} from "../../service/appointment/appointment.service";
+import {Component} from '@angular/core';
+import {AppointmentService} from "../../service/appointment/appointment.service";
 
 import {HttpErrorResponse} from "@angular/common/http";
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {FormBuilder, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {User, UserService} from "../../service/user/user.service";
 import {Pet, PetService} from "../../service/pet/pet.service";
-
+import {AuthService} from "../../service/auth/auth.service";
+import {ToastrService} from "ngx-toastr";
+import {MatDatepickerInputEvent} from "@angular/material/datepicker";
 
 @Component({
   selector: 'app-add-appointment',
   templateUrl: './add-appointment.component.html',
-  styleUrls: ['./add-appointment.component.css']
-})
-export class AddAppointmentComponent implements OnInit {
-  //we have to know who the logged user is, to take the pet list
-  addAppointmentForm: FormGroup;
-  dateTimeMap: Map<string, string[]>;
-  pets: Pet[] = [];
-  vets: User[] = [];
-  selectedPet: any;
-  selectedVetId: any;
-  selectedDate:any;
-  selectedTime:any;
-  isDisabled: boolean;
-  currentUserId:any = 1;
+  styleUrls: ['./add-appointment.component.css'],
+ })
+export class AddAppointmentComponent {
+  appointment: any;
 
-  selectPet(){
-    console.log(this.selectedPet)
-    console.log("This is from select pet")
+  currentUser: User;
+  pet: any;
+  vet: any;
+  type: any = 'първичен преглед';
+  date: any;
+  time: any;
+
+  selectVet(inputVet:any){
+    this.vet = inputVet;
+    console.log("from select vet" + this.vet)
   }
 
-  selectVet() {
-    console.log('Selected vet:', this.selectedVetId);
+  pets:any;
+  vets:any;
+  specVets:any;
+  types:any;
+  times:any;
+
+  duration:any = 0.5;
+  events: string[] = [];
+
+  addEvent(type: string, event: MatDatepickerInputEvent<Date>) {
+    let month
+    if(event.value?.getMonth() != undefined){
+      month = event.value?.getMonth()+1
+    }
+    console.log(this.vet)
+    console.log(this.type)
+    console.log(this.pet)
+    this.date = event.value?.getFullYear() + "-" + month + "-" +event.value?.getDate()
+    this.events.push(`${type}: ${event.value}`);
   }
 
-  selectDate() {
-    console.log('Selected Date:', this.selectedDate);
-  }
-
-  selectTime() {
-    console.log('Selected Time:', this.selectedTime);
-  }
-
-  constructor(public appointmentService: AppointmentService,
-              public petService: PetService,
-              public userService: UserService,
-              private formBuilder: FormBuilder, private router: Router) {
-   // this.dateTimeMap = new Map<string,string[]>();
-  }
-
-  ngOnInit(): void {
-      this.addAppointmentForm = this.formBuilder.group({
-        pet: [''],
-        vet: [''],
-        date: [''],
-        time: [''],
-      });
-    this.getPets();
+  appointmentForm = this.builder.group({
+    type: this.builder.control('', Validators.required),
+    pet: this.builder.control('', Validators.required),
+    vet: this.builder.control('', Validators.required),
+    date: this.builder.control('', Validators.required),
+    time: this.builder.control('', Validators.required),
+    description: this.builder.control(""),
+    status: this.builder.control("UPCOMING"),
+  });
+  todayDate:Date = new Date();
+  constructor(private builder: FormBuilder,
+              private toastr: ToastrService,
+              private service: AuthService,
+              private router: Router,
+              private authService: AuthService,
+              private appointmentService: AppointmentService,
+              private petService: PetService) {
+    this.getUserInfo();
+    this.getTypes();
     this.getVets();
-    this.getFreeAppointments();
-    this.disableDate();
+    this.getPets();
   }
 
-
-
-  disableDate(): any {
-    console.log(this.selectedVetId)
-    if(this.selectedVetId) {
-     this.isDisabled = false;
-    } else {
-      this.isDisabled = true;
+  filterVetsByType(type:string){
+    if(type=="първичен преглед"||type=="профилактичен"){
+      this.duration=0.5; //30 мин/половин час
+      this.specVets = this.vets.filter((vet:User)=>vet.speciality == "REVIEWS,PREVENTIVE");
+      console.log("duration:" + this.duration)
+      console.log(this.specVets)
+      return this.specVets;
+    }else if(type=="стоматологичен"||type=="изследване"){
+      this.duration=1; //60 мин/1 час
+      this.specVets = this.vets.filter((vet:User)=>vet.speciality == "DENTISTRY,RESEARCH");
+      console.log("duration:" + this.duration)
+      console.log(this.specVets)
+      return this.specVets;
+    }else if(type=="кастрация"||type=="хирургия"){
+      this.duration=2; //120 мин/2 часа
+      this.specVets = this.vets.filter((vet:User)=>vet.speciality == "CASTRATIONS,SURGERY");
+      console.log("duration:" + this.duration)
+      console.log(this.specVets)
+      return this.specVets;
     }
   }
 
-  getFreeAppointments(): void {
-    // this.appointmentService.getFreeHours(this.selectedVetId).subscribe(
-    //   (response: Map<string, string[]>) => {
-    //     this.dateTimeMap = response;
-    //   },
-    //   (error:HttpErrorResponse) =>{
-    //     alert(error.message);
-    //   });
-    this.dateTimeMap = new Map<string, string[]>();
 
-      this.dateTimeMap.set('2023-06-01', ['9:00', '11:30', '2:00']);
-      this.dateTimeMap.set('2023-06-02', ['10:00', '12:30', '3:00']);
-      this.dateTimeMap.set('2023-06-03', ['11:00', '12:30', '5:00']);
-
+  submitAppointment() {
+    if (this.appointmentForm.valid) {
+      this.appointmentService.createAppointment(this.appointmentForm.value).subscribe(res => {
+        this.toastr.success('Успешно запазен час!');
+        this.router.navigate(['owner-profile-page']);
+      });
+    }else{
+      this.toastr.warning("Некоректни данни!!!");
+    }
   }
+
+  getFreeTimes(): void {
+    console.log(this.appointmentForm.value.vet)
+    console.log(this.appointmentForm.value.date)
+    this.appointmentService.getFreeHours(this.vet, this.date).subscribe(
+      (response: string[]) => {
+        console.log(response)
+        this.times= response;
+      },
+      (error:HttpErrorResponse) =>{
+        alert(error.message);
+      });
+  }
+
+  getUserInfo(): void {
+    this.authService.getByUsername(this.authService.getLoggedIn()).subscribe(
+      (response: any) => {
+        this.currentUser = response;
+      },
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      });
+  }
+
 
   getPets(): void {
-    this.petService.getPetsByOwner(this.currentUserId).subscribe(
-      (response: Pet[]) => {
-        this.pets = response;
-      },
-      (error:HttpErrorResponse) =>{
-        alert(error.message);
-      });
+   this.authService.getByUsername(this.authService.getLoggedIn()).subscribe(
+        (response: any) => {
+
+          this.petService.getPetsByOwner(response.id).subscribe(
+            (response: Pet[]) => {
+              this.pets = response;
+            },
+            (error: HttpErrorResponse) => {
+              alert(error.message);
+            });
+
+        }
+      )
   }
+
+
 
   getVets(): void {
-    this.userService.getAllVets().subscribe(
-      (response: User[]) => {
+    this.authService.getAllVets().subscribe(
+      (response: any) => {
         this.vets = response;
       },
-      (error:HttpErrorResponse) =>{
+      (error: HttpErrorResponse) => {
         alert(error.message);
       });
   }
-
-  onAppointmentSubmit() {
-    const pet = this.addAppointmentForm.controls['pet'].value
-    const vet = this.addAppointmentForm.controls['vet'].value
-    const date = this.addAppointmentForm.controls['date'].value
-    const time = this.addAppointmentForm.controls['time'].value
-    //
-    // let appoinmentRequest = new AppointmentRequest()
-    //
-    // this.service.createAppointment(appoinmentRequest).subscribe(
-    //   response => console.log(response),
-    //   error => console.log(error)
-    // );
-    this.router.navigate(['/home'])
+  getTypes(): void {
+    this.types = [
+      "първичен преглед", "профилактичен", //30 мин
+      "стоматологичен", "изследване", //60 мин
+      "кастрация", "хирургия", //120 мин
+    ]
   }
 
-  prettyDate(date:string):string{
+  prettyDate(date: string): string {
     let day = date.substring(8, 10);
-    let month = date.substring(5,7);
-    let year = date.substring(0,4);
+    let month = date.substring(5, 7);
+    let year = date.substring(0, 4);
     return day + "." + month + "." + year
   }
-  prettyTime(date:string):string{
-    let hour =  date.substring(0,2);
-    let minute= date.substring(3,5);
+
+  prettyTime(date: string): string {
+    let hour = date.substring(0, 2);
+    let minute = date.substring(3, 5);
     return hour + ":" + minute;
   }
 

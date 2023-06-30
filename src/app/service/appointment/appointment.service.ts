@@ -10,7 +10,8 @@ export interface Appointment {
   owner: User;
   pet: Pet;
   veterinarian: User;
-  dateTime: string;
+  date: string;
+  type: string;
   description: string;
   status: string;
 }
@@ -21,6 +22,7 @@ export class AppointmentRequest {
     public pet: Pet,
     public veterinarian: User,
     public dateTime: string,
+    public type: string,
     public description: string,
     public status: string
   ) {
@@ -35,55 +37,31 @@ export class AppointmentService {
   private apiUrl = 'http://localhost:8080/appointment';
   private apiUrlOwner = 'http://localhost:8080/appointment/owner';
   private apiUrlVet = 'http://localhost:8080/appointment/vet';
-  private appointmentId = new BehaviorSubject<string>("default id");
-  currentId = this.appointmentId.asObservable();
+  private apiUrlVetWaiting = 'http://localhost:8080/appointment/vet/waiting';
   private status = "UPCOMING";
   constructor(private http: HttpClient) {
-  }
-
-  changeAppointmentId(appointmentId: string) {
-    this.appointmentId.next(appointmentId);
-  }
-
-  form: FormGroup = new FormGroup({
-    $key: new FormControl(null),
-    owner: new FormControl(''),
-    pet: new FormControl(''),
-    dateTime: new FormControl(''),
-    veterinarian: new FormControl(),
-    description: new FormControl(),
-    status: new FormControl(),
-
-  });
-
-  initFormGroup() {
-    this.form.setValue({
-      $key: null,
-      owner:'',
-      pet: '',
-      dateTime: '',
-      veterinarian: '',
-      description: '',
-      status: ''
-    });
   }
 
   getAllAppointments(): Observable<Appointment[]> {
     return this.http.get<Appointment[]>(`${this.apiUrl}`);
   }
-  getAllAppointmentsForOwner(id: number): Observable<Appointment[]> {
-    return this.http.get<Appointment[]>(`${this.apiUrlOwner}/${id}`);
+  getAllAppointmentsForOwner(id: number, status:string) {
+    return this.http.get(`${this.apiUrlOwner}/${id}/${status}`);
   }
-  getAllAppointmentsForVet(id: number): Observable<Appointment[]> {
-    return this.http.get<Appointment[]>(`${this.apiUrlVet}/${id}`);
+  getAllAppointmentsForVet(id: number, status:string): Observable<Appointment[]> {
+    return this.http.get<Appointment[]>(`${this.apiUrlVet}/${id}/${status}`);
+  }
+
+  getAllWaitingForDesc(id: number, status:string): Observable<Appointment[]> {
+    return this.http.get<Appointment[]>(`${this.apiUrlVetWaiting}/${id}/${status}`);
   }
 
   getAppointmentById(id: number): Observable<Appointment> {
     return this.http.get<Appointment>(`${this.apiUrl}/${id}`);
   }
 
-  createAppointment(appointment: AppointmentRequest): Observable<any> {
-    return this.http.post<Appointment>(`${this.apiUrl}`, appointment);
+  createAppointment(inputData:any): Observable<any> {
+    return this.http.post<Appointment>(`${this.apiUrl}`, inputData);
   }
 
   updateAppointment(appointment: Appointment): Observable<Appointment> {
@@ -94,8 +72,8 @@ export class AppointmentService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-  getFreeHours(vetId:number):Observable<Map<string, string[]>>{
-    return this.http.get<Map<string, string[]>>(`${this.apiUrl}/${vetId}/${this.status}`);
+  getFreeHours(vetId:number, date:string):Observable<string[]>{
+    return this.http.get<string[]>(`${this.apiUrl}/${vetId}/${date}`);
   }
 
   //0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16

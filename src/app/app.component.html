@@ -4,10 +4,10 @@
   <span><b>SuperPets</b></span>
   <span class="navbar-spacer"></span>
   <button [routerLink]="['/']" mat-button><h3>За нас</h3></button>
-  <button [routerLink]="['/add-appointment']" mat-button><b><h3>Запази час</h3></b></button>
+  <button *ngIf="isOwner" [routerLink]="['/add-appointment']" mat-button><b><h3>Запази час</h3></b></button>
   <button [routerLink]="['/list-services']" mat-button><b><h3>Услуги</h3></b></button>
   <button [routerLink]="['/list-articles']" mat-button><b><h3>Полезно</h3></b></button>
-  <a class="nav-link"  [routerLink]="[profilePage]" mat-icon-button><mat-icon>account_box</mat-icon></a>
+  <a class="nav-link" [routerLink]="[profilePage]" mat-icon-button><mat-icon>account_box</mat-icon></a>
 </div>
 
 <div class="cardHolder" role="main">

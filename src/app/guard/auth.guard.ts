@@ -16,12 +16,11 @@ export class AuthGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if (this.service.isLoggedIn()) {
       if(route.url.length>0){
-        let menu=route.url[0].path;
-        if(menu=='user'){
-          if(this.service.getUserRole()=='ROLE_VET,ROLE_ADMIN'){
+        let path=route.url[0].path;
+        if(path=='add-appointment'){
+          if(this.service.getUserRole()=='ROLE_OWNER'){
             return true;
           }else{
-            this.toastr.warning('You dont have access!!!');
             this.router.navigate(['/']);
             return false;
           }

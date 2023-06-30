@@ -1,7 +1,7 @@
 <div class="mat-elevation-z8">
-    <button mat-raised-button [routerLink]="['/']">
-      <mat-icon>add</mat-icon>Добави
-    </button>
+  <button mat-raised-button *ngIf="isVetOrAdmin" (click)="add()">
+    <mat-icon>add</mat-icon>Добави
+  </button>
     <mat-form-field class="search-form-field" >
       <input matInput [(ngModel)]="searchKey" placeholder="Търсене" autocomplete="off" (keyup)="applyFilter()">
       <button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
@@ -17,15 +17,15 @@
     </ng-container>
 
     <ng-container matColumnDef="description">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef>  </th>
+      <th mat-header-cell mat-sort-header *matHeaderCellDef> Отговор </th>
       <td mat-cell *matCellDef="let element"> {{element.description}} </td>
     </ng-container>
 
-    <ng-container matColumnDef="action">
+    <ng-container matColumnDef="action"  >
       <th mat-header-cell mat-sort-header *matHeaderCellDef> Редактиране </th>
       <td mat-cell *matCellDef="let element">
-        <a *ngIf="element.roles!='ROLE_VET,ROLE_ADMIN'" (click)="updateElement(element.username)"
-           mat-raised-button color="primary"><mat-icon>edit</mat-icon></a>
+        <button mat-icon-button color="primary" (click)="update(element.id)"><mat-icon>edit</mat-icon></button>
+        <button mat-icon-button color="warn" (click)="onDelete(element.id)"><mat-icon>delete_outline</mat-icon></button>
       </td>
     </ng-container>
 

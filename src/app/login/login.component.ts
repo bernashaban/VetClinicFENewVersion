@@ -43,10 +43,10 @@ export class LoginComponent {
             }
 
           } else {
-            this.toastr.error("Contact admin for further information", "Account is not active")
+            this.toastr.error("Свържете се с нас за повече информация.", "Профилът ви е деактивиран!")
           }
         } else {
-          this.toastr.error("Invalid credentials")
+          this.toastr.error("Грешно потребителско име или парола!")
         }
 
       })

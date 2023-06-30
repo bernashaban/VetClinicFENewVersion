@@ -24,31 +24,8 @@ export class AssistanceRequest {
 })
 export class AssistanceService {
   private apiUrl = 'http://localhost:8080/assistance';
-  private assistanceId = new BehaviorSubject<string>("default id");
-  currentId = this.assistanceId.asObservable();
 
   constructor(private http: HttpClient) {
-  }
-
-  changeAssistanceId(assistanceId: string) {
-    this.assistanceId.next(assistanceId);
-  }
-
-  form: FormGroup = new FormGroup({
-    $key: new FormControl(null),
-    name: new FormControl(''),
-    serviceType: new FormControl(''),
-    price: new FormControl(),
-
-  });
-
-  initFormGroup() {
-    this.form.setValue({
-      $key: null,
-      name: '',
-      serviceType: '',
-      price: ''
-    });
   }
 
   getAllAssistances(): Observable<Assistance[]> {
@@ -59,12 +36,12 @@ export class AssistanceService {
     return this.http.get<Assistance>(`${this.apiUrl}/${id}`);
   }
 
-  createAssistance(assistance: AssistanceRequest): Observable<Assistance> {
+  createAssistance(assistance: any): Observable<Assistance> {
     return this.http.post<Assistance>(`${this.apiUrl}`, assistance);
   }
 
-  updateAssistance(assistance: Assistance): Observable<Assistance> {
-    return this.http.put<Assistance>(`${this.apiUrl}`, assistance);
+  updateAssistance(assistance: any, id:number): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}`, assistance);
   }
 
   deleteAssistance(id: number): Observable<void> {

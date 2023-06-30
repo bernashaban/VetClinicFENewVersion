@@ -1,4 +1,4 @@
-<div class='bold-line' xmlns="http://www.w3.org/1999/html"></div>
+<div class='bold-line'></div>
 <div class='container'>
   <div class="background-image">
     <div class='window'>
@@ -11,7 +11,13 @@
             <p class="input-line ">Потребителско име: {{ currentUser.username }}</p>
             <p class="input-line ">Телефон: {{ currentUser.phoneNum }}</p>
             <p class="input-line ">Адрес: {{ currentUser.address }}</p>
-
+            <div>
+              <button (click)="updatePersonalInfo(currentUser.id)" class='ghost-round full-width'>Редактирай</button>
+            </div>
+            <mat-form-field class="search-form-field">
+              <input matInput [(ngModel)]="searchKey" placeholder="Търсене" autocomplete="off" (keyup)="applyFilter()">
+              <button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+                <mat-icon>close</mat-icon></button></mat-form-field>
             <div class="mat-elevation-z8">
               <table mat-table matSort [dataSource]="dataSource">
 
@@ -31,7 +37,7 @@
                 </ng-container>
 
                 <ng-container matColumnDef="username">
-                  <th mat-header-cell mat-sort-header *matHeaderCellDef> Потребителксо име</th>
+                  <th mat-header-cell mat-sort-header *matHeaderCellDef> Потребителско име</th>
                   <td mat-cell *matCellDef="let element"> {{element.username}} </td>
                 </ng-container>
 
@@ -43,22 +49,20 @@
 
                 <ng-container matColumnDef="roles">
                   <th mat-header-cell mat-sort-header *matHeaderCellDef> Права</th>
-                  <td mat-cell *matCellDef="let element"> {{element.roles}} </td>
+                  <td mat-cell *matCellDef="let element"> {{getRole(element.roles)}} </td>
                 </ng-container>
 
 
                 <ng-container matColumnDef="active">
-                  <th mat-header-cell mat-sort-header *matHeaderCellDef> Състояние на акаунт</th>
-                  <td mat-cell *matCellDef="let element"> {{element.active ? 'Active' : 'Not active'}} </td>
+                  <th mat-header-cell mat-sort-header *matHeaderCellDef>Aкаунт</th>
+                  <td mat-cell *matCellDef="let element"> {{element.active ? 'Активен' : 'Неактивен'}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="action">
                   <th mat-header-cell mat-sort-header *matHeaderCellDef> Редактиране</th>
                   <td mat-cell *matCellDef="let element">
-                    <a *ngIf="element.roles!='ROLE_VET,ROLE_ADMIN'" (click)="updateUser(element.username)"
-                       mat-raised-button color="primary">
-                      <mat-icon>edit</mat-icon>
-                    </a>
+                    <button mat-icon-button color="primary" (click)="update(element.id)"><mat-icon>edit</mat-icon></button>
+                    <button mat-icon-button color="warn" (click)="onDelete(element.id)"><mat-icon>delete_outline</mat-icon></button>
                   </td>
                 </ng-container>
 

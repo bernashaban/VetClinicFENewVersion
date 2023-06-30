@@ -31,35 +31,8 @@ export class PetService {
 
   private apiUrl = 'http://localhost:8080/pet';
   private apiUrl2 = 'http://localhost:8080/pet/pets';
-  private petId = new BehaviorSubject<string>("default id");
-  currentId = this.petId.asObservable();
 
   constructor(private http: HttpClient) {
-  }
-
-  changePetId(petId: string) {
-    this.petId.next(petId);
-  }
-
-  form: FormGroup = new FormGroup({
-    $key: new FormControl(null),
-    name: new FormControl(''),
-    //name: new FormControl('', [Validators.required, Validators.minLength(8)]),
-    age: new FormControl(''),
-    gender: new FormControl(''),
-    type: new FormControl(),
-
-  });
-
-  initFormGroup() {
-    this.form.setValue({
-      $key: null,
-      owner: '',
-      name: '',
-      age: '',
-      type: '',
-      gender:''
-    });
   }
 
   getAllPets(): Observable<Pet[]> {

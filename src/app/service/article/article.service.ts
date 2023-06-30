@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, Observable} from "rxjs";
-import {FormControl, FormGroup} from "@angular/forms";
+import {Observable} from "rxjs";
 
 export interface Article {
   id: number;
@@ -25,31 +24,8 @@ export class ArticleRequest {
 export class ArticleService {
 
   private apiUrl = 'http://localhost:8080/article';
-  private articleId = new BehaviorSubject<string>("default id");
-  currentId = this.articleId.asObservable();
 
   constructor(private http: HttpClient) {
-  }
-
-  changeArticleId(articleId: string) {
-    this.articleId.next(articleId);
-  }
-
-  form: FormGroup = new FormGroup({
-    $key: new FormControl(null),
-    title: new FormControl(''),
-    description: new FormControl(''),
-    photoUrl: new FormControl(),
-
-  });
-
-  initFormGroup() {
-    this.form.setValue({
-      $key: null,
-      title: '',
-      description: '',
-      photoUrl: ''
-    });
   }
 
   getAllArticles(): Observable<Article[]> {
@@ -64,8 +40,8 @@ export class ArticleService {
     return this.http.post<Article>(`${this.apiUrl}`, article);
   }
 
-  updateArticle(article: Article): Observable<Article> {
-    return this.http.put<Article>(`${this.apiUrl}`, article);
+  updateArticle(article: any, id:number): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}`, article);
   }
 
   deleteArticle(id: number): Observable<void> {

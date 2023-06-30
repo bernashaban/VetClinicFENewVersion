@@ -1,25 +1,41 @@
-<mat-card>
-  <mat-card-content>
-    <mat-card-header><h1>Update</h1>
-    </mat-card-header>
-    <form class="example-form" [formGroup]="updateForm" (ngSubmit)="updateUser()" >
-      <mat-form-field class="example-full-width">
-        <mat-label>Role</mat-label>
-        <mat-select formControlName="roles">
-          <mat-option *ngFor="let item of roles" [value]="item">
-            {{item}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <div>
-        <mat-checkbox formControlName="isActive" class="example-margin">Is Active</mat-checkbox>
+<div class='bold-line'></div>
+<div class='container'>
+  <div class="background-image">
+    <div class='window'>
+      <div class='overlay'></div>
+      <div class='content'>
+        <div class='welcome'>Редактиране на услуга</div>
+        <div class='input-fields'>
+          <form class="form-group "  [formGroup]="updateForm" (ngSubmit)="updateUser()">
+            <div class="mb-3" >
+              <mat-form-field>
+                <mat-label class='input-line full-width'>Права</mat-label>
+                <mat-select formControlName="roles">
+                  <mat-option class='input-line full-width' *ngFor="let role of roles" [value]="role.value" >
+                    {{role.viewValue}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="mb-3">
+              <mat-label class='input-line full-width'>Състояние на акаунт</mat-label><br>
+              <mat-radio-group formControlName="active" aria-label="Акаунт">
+                <mat-radio-button value=true>Активен</mat-radio-button>
+                <mat-radio-button value=false>Неактивен</mat-radio-button>
+              </mat-radio-group>
+            </div>
+
+            <div>
+              <button class='ghost-round full-width' type="submit">Запази</button>
+              <button mat-dialog-close class='ghost-round full-width' >Отказ</button>
+            </div>
+          </form>
+
+        </div>
       </div>
-      <div>
-        <button mat-raised-button color="primary">Update</button>
-        <a mat-dialog-close mat-raised-button color="accent">Close</a>
-      </div>
-    </form>
-  </mat-card-content>
-</mat-card>
+    </div>
+  </div>
+</div>
+
 
 

@@ -67,7 +67,7 @@ button:focus {
   font-family: roboto;
   font-weight: 300;
   line-height: 2.5em;
-  margin-top: auto;
+  margin-top: 20px;
   margin-bottom: 25px;
   -webkit-transition: all .2s ease;
   transition: all .2s ease;
@@ -218,4 +218,6 @@ button:focus {
   width: 600px;
   margin-bottom: 30px;
 }
-
+.mat-column-description {
+  width: 30%;
+}

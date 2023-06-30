@@ -11,86 +11,123 @@
             <p class="input-line ">Потребителско име: {{ currentUser.username }}</p>
             <p class="input-line ">Телефон: {{ currentUser.phoneNum }}</p>
             <p class="input-line ">Адрес: {{ currentUser.address }}</p>
-            <button  class='ghost-round' >Любимци </button>
-              <div class="mat-elevation-z8">
-              <mat-table [dataSource]="pets" >
-                <ng-container matColumnDef="name">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Име</mat-header-cell>
-                  <mat-cell *matCellDef="let element">{{element.name}}</mat-cell>
-                </ng-container>
-                <ng-container matColumnDef="age">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Възраст</mat-header-cell>
-                  <mat-cell *matCellDef="let element">{{element.age}} г.</mat-cell>
-                </ng-container>
-                <ng-container matColumnDef="gender">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Пол</mat-header-cell>
-                  <mat-cell *matCellDef="let element">{{girlOrBoy(element.gender)}}</mat-cell>
-                </ng-container>
-                <ng-container matColumnDef="type">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Тип</mat-header-cell>
-                  <mat-cell *matCellDef="let element">{{petType(element.type)}}</mat-cell>
-                </ng-container>
-                <ng-container matColumnDef="actions">
-                  <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                  <mat-cell *matCellDef = "let row">
-                    <button mat-icon-button color="warn" (click)="onDelete(row.id)"><mat-icon>delete_outline</mat-icon></button>
-                    <button mat-icon-button color="primary" (click)="onChange()"><mat-icon>edit</mat-icon></button>
-                  </mat-cell>
-                  <mat-cell *matCellDef = "let row">
+            <p class="input-line ">Любимци</p>
 
-                  </mat-cell>
-                </ng-container>
-<!--                <ng-container matColumnDef="loading">-->
-<!--                  <mat-footer-cell *matFooterCellDef colspan="6">-->
-<!--                    Зареждат се още...-->
-<!--                  </mat-footer-cell>-->
-<!--                </ng-container>-->
-<!--                <ng-container matColumnDef="noData">-->
-<!--                  <mat-footer-cell *matFooterCellDef colspan="6">-->
-<!--                    Няма данни.-->
-<!--                  </mat-footer-cell>-->
-<!--                </ng-container>-->
-                <mat-header-row *matHeaderRowDef="displayedColumnsForPet"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: displayedColumnsForPet;"></mat-row>
-<!--                <mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide':pets!=null}" ></mat-footer-row>-->
-<!--                <mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide':!(pets!=null && pets.length==0)}"></mat-footer-row>-->
-              </mat-table>
-              <mat-paginator [pageSizeOptions]="[3,5,10,20]" [pageSize]="5" showFirstLastButtons></mat-paginator>
-            </div>
-            <button  class='ghost-round' >Прегледи</button>
-            <div class="mat-elevation-z8">
-              <mat-table [dataSource]="appointments" >
-                <ng-container matColumnDef="pet">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Пациент</mat-header-cell>
-                  <mat-cell *matCellDef="let element">{{element.pet.name}}</mat-cell>
-                </ng-container>
-                <ng-container matColumnDef="vet">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Ветеринар</mat-header-cell>
-                  <mat-cell *matCellDef="let element">{{element.veterinarian.fullName}}</mat-cell>
-                </ng-container>
-                <ng-container matColumnDef="date">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Дата/Час</mat-header-cell>
-                  <mat-cell *matCellDef="let element">{{prettyDate(element.dateTime)}}</mat-cell>
-                </ng-container>
-                <ng-container matColumnDef="status">
-                  <mat-header-cell *matHeaderCellDef mat-sort-header>Статус</mat-header-cell>
-                  <mat-cell *matCellDef="let element">{{getStatus(element.status)}}</mat-cell>
-                </ng-container>
-                <ng-container matColumnDef="actions">
-                  <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                  <mat-cell *matCellDef = "let row">
-                    <button mat-icon-button color="warn" (click)="onDelete(row.id)"><mat-icon>delete_outline</mat-icon></button>
-                  </mat-cell>
-                </ng-container>
-                <mat-header-row *matHeaderRowDef="displayedColumnsForAppointment"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: displayedColumnsForAppointment;"></mat-row>
-              </mat-table>
-              <mat-paginator [pageSizeOptions]="[3,5,10,20]" [pageSize]="5" showFirstLastButtons></mat-paginator>
-            </div>
-          </div>
-        </div>
+            <table mat-table matSort [dataSource]="petsDataSource">
+
+              <ng-container matColumnDef="name">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>Име</th>
+                <td mat-cell  *matCellDef="let element">{{element.name}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="age">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef> Години </th>
+                <td mat-cell *matCellDef="let element"> {{element.age}}г. </td>
+              </ng-container>
+
+              <ng-container matColumnDef="gender">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef> Пол </th>
+                <td mat-cell *matCellDef="let element">{{girlOrBoy(element.gender)}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="type">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef> Тип </th>
+                <td mat-cell *matCellDef="let element">{{element.type}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="actions"  >
+                <th mat-header-cell *matHeaderCellDef> Редактиране </th>
+                <td mat-cell *matCellDef="let element">
+                  <button mat-icon-button color="primary" (click)="update(element.id)"><mat-icon>edit</mat-icon></button>
+                  <button mat-icon-button color="warn" (click)="onDelete(element.id)"><mat-icon>delete_outline</mat-icon></button>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumnsForPet"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumnsForPet;"></tr>
+            </table>
+
+            <button (click)="onAddPetClicked()" class='ghost-round '>Добави любимец</button>
+            <p class="input-line ">Предстоящи прегледи</p>
+            <table mat-table matSort [dataSource]="upcomingAppointmentsDataSource">
+
+              <ng-container matColumnDef="pet">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>Пациент</th>
+                <td mat-cell  *matCellDef="let element">{{element.pet.name}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="vet">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef> Ветеринар </th>
+                <td mat-cell *matCellDef="let element">Д-р {{element.vet.fullName}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="date">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef> Дата </th>
+                <td mat-cell *matCellDef="let element">{{prettyDate(element.date)}} </td>
+              </ng-container>
+
+<!--              <ng-container matColumnDef="time">-->
+<!--                <th mat-header-cell mat-sort-header *matHeaderCellDef> Начален час </th>-->
+<!--                <td mat-cell *matCellDef="let element">{{element.type}}</td>-->
+<!--              </ng-container>-->
+              <ng-container matColumnDef="type">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef> Тип </th>
+                <td mat-cell *matCellDef="let element">{{getBgType(element.type)}}</td>
+              </ng-container>
+              <ng-container matColumnDef="duration">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef> Времетраене </th>
+                <td mat-cell *matCellDef="let element">{{element.duration}} минути</td>
+              </ng-container>
+
+              <ng-container matColumnDef="actions"  >
+                <th mat-header-cell *matHeaderCellDef> Изтриване </th>
+                <td mat-cell *matCellDef="let element">
+<!--                  <button mat-icon-button color="primary" (click)="update(element.id)"><mat-icon>edit</mat-icon></button>-->
+                  <button mat-icon-button color="warn" (click)="onDelete(element.id)"><mat-icon>delete_outline</mat-icon></button>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumnsForUpcomingAppointment"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumnsForUpcomingAppointment;"></tr>
+            </table>
+            <p class="input-line ">Минали прегледи</p>
+            <mat-form-field class="search-form-field">
+              <input matInput [(ngModel)]="searchKey" placeholder="Търсене" autocomplete="off" (keyup)="applyFilter()">
+              <button matSuffix mat-icon-button aria-label="Clear" *ngIf="searchKey" (click)="onSearchClear()">
+                <mat-icon>close</mat-icon></button></mat-form-field>
+
+            <table mat-table matSort [dataSource]="passedAppointmentsDataSource">
+
+              <ng-container matColumnDef="pet">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef>Пациент</th>
+                <td mat-cell  *matCellDef="let element">{{element.pet.name}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="vet">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef> Ветеринар </th>
+                <td mat-cell *matCellDef="let element">Д-р {{element.vet.fullName}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="date">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef> Дата </th>
+                <td mat-cell *matCellDef="let element">{{prettyDate(element.date)}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="type">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef> Тип </th>
+                <td mat-cell *matCellDef="let element">{{getBgType(element.type)}}</td>
+              </ng-container>
+
+              <ng-container matColumnDef="description">
+                <th mat-header-cell mat-sort-header *matHeaderCellDef> Описание </th>
+                <td mat-cell *matCellDef="let element">{{getFormattedDescription(element.description)}}</td>
+              </ng-container>
+
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumnsForPassedAppointment"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumnsForPassedAppointment;"></tr>
+            </table>
         <div>
-          <button (click)="onAddPetClicked()" class='ghost-round full-width'>Добави любимец</button>
           <button (click)="onLogoutClicked()" class='ghost-round full-width'>Изход</button>
         </div>
       </div>
