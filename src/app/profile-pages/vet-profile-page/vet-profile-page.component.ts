@@ -1,6 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {User, UserService} from "../../service/user/user.service";
-import {Pet, PetService} from "../../service/pet/pet.service";
+import {Component, ViewChild} from '@angular/core';
 import {Appointment, AppointmentService} from "../../service/appointment/appointment.service";
 import {AuthService} from "../../service/auth/auth.service";
 import {AuthGuard} from "../../guard/auth.guard";
@@ -9,6 +7,10 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
+import {MatDialog} from "@angular/material/dialog";
+import {
+  AddDescriptionPopUpComponent
+} from "../../appointments-all/add-description-pop-up/add-description-pop-up.component";
 interface Type {
   value: string;
   viewValue: string;
@@ -39,18 +41,27 @@ export class VetProfilePageComponent {
   passedAppointmentsDataSource: any;
   waitingAppointments: any;
   waitingAppointmentsDataSource: any;
-  displayedColumnsForUpcomingAppointment: string[] = ['pet', 'owner', 'date', 'type', 'duration', 'actions'];
+  displayedColumnsForUpcomingAppointment: string[] = ['pet', 'owner', 'date', 'time', 'type', 'duration', 'actions'];
   displayedColumnsForPassedAppointment: string[] = ['pet', 'owner', 'date', 'type', 'description', 'actions'];
   displayedColumnsForWaitingAppointment: string[] = ['pet', 'owner', 'date', 'type', 'actions'];
+
+  times:any;
 
   constructor(private service: AuthService,
               private guard: AuthGuard,
               private router: Router,
+              private dialog: MatDialog,
               private appointmentService: AppointmentService) {
     this.getUserInfo();
     this.getUpcomingAppointments();
     this.getPassedAppointments();
     this.getWaitingAppointments();
+   this.times = ["9:00","9:30", "10:00", "11:30", "13:00","13:30", "14:30", "15:00", "16:30", "17:00"]
+  }
+
+  getRandomTime(){
+    let random = Math.round(Math.random() * 10);
+    return this.times[random]
   }
   @ViewChild(MatPaginator) upcAppPaginator !: MatPaginator
   @ViewChild(MatSort) upcAppSort !: MatSort
@@ -140,6 +151,20 @@ export class VetProfilePageComponent {
     //   this.getUserPets()
     // );
   }
+  addDescription(id: number) {
+    const popup = this.dialog.open(AddDescriptionPopUpComponent,{
+      enterAnimationDuration:'1000ms',
+      exitAnimationDuration:'1000ms',
+      width:'50%',
+      data:{
+        id:id
+      }
+    })
+    popup.afterClosed().subscribe(res=>{
+      this.getWaitingAppointments();
+      this.getPassedAppointments();
+    })
+  }
   prettyDate(date: string): string {
     let day = date.substring(8);
     let month = date.substring(5, 7);
@@ -162,7 +187,7 @@ export class VetProfilePageComponent {
     let formatted = "";
     for (let i = 0; i < stringArray.length; i++) {
       let currentLine = stringArray[i];
-      formatted= formatted+currentLine+";"+'\n';
+      formatted= formatted+currentLine+'\n';
     }
     return formatted
   }

@@ -27,6 +27,9 @@ import { AddPetPopupComponent } from './pet-all/add-pet-popup/add-pet-popup.comp
 import { UpdatePetPopupComponent } from './pet-all/update-pet-popup/update-pet-popup.component';
 import {MatDividerModule} from "@angular/material/divider";
 import { UpdatePopupPersonalInfoComponent } from './update-popup-personal-info/update-popup-personal-info.component';
+import {MatToolbarModule} from "@angular/material/toolbar";
+import { AddDescriptionPopUpComponent } from './appointments-all/add-description-pop-up/add-description-pop-up.component';
+import { UpdateAppointmentPopupComponent } from './appointments-all/update-appointment-popup/update-appointment-popup.component';
 
 
 @NgModule({
@@ -49,7 +52,9 @@ import { UpdatePopupPersonalInfoComponent } from './update-popup-personal-info/u
     UpdateAssistancePopupComponent,
     AddPetPopupComponent,
     UpdatePetPopupComponent,
-    UpdatePopupPersonalInfoComponent
+    UpdatePopupPersonalInfoComponent,
+    AddDescriptionPopUpComponent,
+    UpdateAppointmentPopupComponent
   ],
   imports: [
     BrowserModule,
@@ -60,7 +65,8 @@ import { UpdatePopupPersonalInfoComponent } from './update-popup-personal-info/u
     HttpClientModule,
     FormsModule,
     ToastrModule.forRoot(),
-    MatDividerModule
+    MatDividerModule,
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

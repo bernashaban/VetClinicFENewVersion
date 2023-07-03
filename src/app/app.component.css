@@ -1,14 +1,17 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,300,100,500);
 
-.navbar-spacer {
+.example-spacer {
   flex: 1 1 auto;
 }
-.toolbar{
+
+.mat-toolbar{
   font-family: roboto;
   background-color: #b7e2fc;
   text-decoration-color: black;
 }
-
+button{
+  font-size: 80%;
+}
 .footer {
   font-family: roboto;
   display: flex;
@@ -57,8 +60,6 @@
   background-position: center;
   background-size: cover;
 }
-
-
 
 
 

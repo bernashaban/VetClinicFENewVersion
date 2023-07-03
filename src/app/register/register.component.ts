@@ -3,6 +3,7 @@ import {FormBuilder, Validators} from "@angular/forms";
 import {ToastrService} from "ngx-toastr";
 import {AuthService} from "../service/auth/auth.service";
 import {Router} from "@angular/router";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-register',
@@ -36,7 +37,9 @@ export class RegisterComponent {
       this.service.register(this.registerForm.value).subscribe(res=>{
         this.toastr.success('Успешна регистрация!');
         this.router.navigate(['login']);
-      });
+      },
+        (error: HttpErrorResponse) => {
+          this.toastr.error(error.message);})
     }else{
       this.toastr.warning("Некоректни данни!!!");
     }

@@ -105,24 +105,25 @@ button:focus {
 }
 
 .container {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
+  /*display: -webkit-box;*/
+  /*display: -webkit-flex;*/
+  /*display: -ms-flexbox;*/
+  /*display: flex;*/
+  /*-webkit-box-align: center;*/
+  /*-webkit-align-items: center;*/
+  /*-ms-flex-align: center;*/
+  /*align-items: center;*/
+  /*-webkit-box-pack: center;*/
+  /*-webkit-justify-content: center;*/
+  /*-ms-flex-pack: center;*/
+  /*justify-content: center;*/
   height: 100%;
+  margin: 20px;
 }
 
 .content {
-  padding-left: 25px;
-  padding-right: 25px;
+  padding: 25px;
+  /*padding-right: 25px;*/
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -135,7 +136,8 @@ button:focus {
 
 .welcome {
   font-weight: 200;
-  margin-top: 75px;
+  margin-top: 50px;
+  margin-bottom: 25px;
   text-align: center;
   font-size: 40px;
   font-size: 2.5rem;
@@ -171,8 +173,8 @@ button:focus {
   flex-flow: column;
   box-shadow: 0px 15px 50px 10px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
-  height: 560px;
-  width: 360px;
+  height: 100%;
+  width: 100%;
   background: black;
   background: url('https://pexels.imgix.net/photos/27718/pexels-photo-27718.jpg?fit=crop&w=1280&h=823') top left no-repeat;
 }
@@ -182,7 +184,7 @@ button:focus {
   background: linear-gradient(#b7e2fc, #2886ad);
   opacity: 0.95;
   filter: alpha(opacity=95);
-  height: 560px;
+  height: 100%;
   position: absolute;
   width: 100%;
   z-index: 1;

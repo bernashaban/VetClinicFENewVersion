@@ -1,21 +1,37 @@
-<div class="toolbar" role="banner">
+<!--<div class="toolbar" role="banner">-->
+<!--  <img src="https://parspng.com/wp-content/uploads/2023/01/catpng.parspng.com_.png"-->
+<!--       width="60" height="60">-->
+<!--  <span class="toolbar-text"><b>SuperPets</b></span>-->
+<!--  <span class="navbar-spacer"></span>-->
+<!--  <button [routerLink]="['/']" mat-button>За нас</button>-->
+<!--  <button *ngIf="isOwner" [routerLink]="['/add-appointment']" mat-button>Запази час</button>-->
+<!--  <button [routerLink]="['/list-services']" mat-button>Услуги</button>-->
+<!--  <button [routerLink]="['/list-articles']" mat-button>Полезно</button>-->
+<!--  <a class="nav-link" [routerLink]="[profilePage]" mat-icon-button><mat-icon>account_box</mat-icon></a>-->
+<!--</div>-->
+
+
+<mat-toolbar>
   <img src="https://parspng.com/wp-content/uploads/2023/01/catpng.parspng.com_.png"
        width="60" height="60">
-  <span><b>SuperPets</b></span>
-  <span class="navbar-spacer"></span>
-  <button [routerLink]="['/']" mat-button><h3>За нас</h3></button>
-  <button *ngIf="isOwner" [routerLink]="['/add-appointment']" mat-button><b><h3>Запази час</h3></b></button>
-  <button [routerLink]="['/list-services']" mat-button><b><h3>Услуги</h3></b></button>
-  <button [routerLink]="['/list-articles']" mat-button><b><h3>Полезно</h3></b></button>
-  <a class="nav-link" [routerLink]="[profilePage]" mat-icon-button><mat-icon>account_box</mat-icon></a>
-</div>
+  <span>SuperPets</span>
+  <span class="example-spacer"></span>
+  <button [routerLink]="['/']" mat-button>За нас</button>
+  <button *ngIf="isOwner" [routerLink]="['/add-appointment']" mat-button>Запази час</button>
+  <button [routerLink]="['/list-services']" mat-button>Услуги</button>
+  <button [routerLink]="['/list-articles']" mat-button>Полезно</button>
+  <button mat-icon-button [routerLink]="[profilePage]">
+    <mat-icon>account_box</mat-icon>
+  </button>
+</mat-toolbar>
+
 
 <div class="cardHolder" role="main">
   <router-outlet></router-outlet>
 </div>
 
 
-<div class="footer">
+<div class="footer" role="banner">
   <div class="socialMedia">
     <mat-icon>facebook</mat-icon>
     <p class="textFooter">Super Pets</p>

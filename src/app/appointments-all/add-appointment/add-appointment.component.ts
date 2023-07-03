@@ -72,6 +72,7 @@ export class AddAppointmentComponent {
     this.getTypes();
     this.getVets();
     this.getPets();
+    this.times = ["11:30"];
   }
 
   filterVetsByType(type:string){

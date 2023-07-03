@@ -67,7 +67,7 @@ button:focus {
   font-family: roboto;
   font-weight: 300;
   line-height: 2.5em;
-  margin-top: 20px;
+  margin-top: auto;
   margin-bottom: 25px;
   -webkit-transition: all .2s ease;
   transition: all .2s ease;
@@ -83,13 +83,13 @@ button:focus {
 .input-line {
   background: none;
   margin-bottom: 10px;
-  line-height: 2.4em;
+  /*line-height: 2.4em;*/
   color: black;
   font-family: roboto;
   font-weight: 300;
-  letter-spacing: 0px;
+  /*letter-spacing: 0px;*/
   letter-spacing: 0.02rem;
-  font-size: 19px;
+  /*font-size: 19px;*/
   font-size: 1.2rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.65);
   -webkit-transition: all .2s ease;
@@ -101,6 +101,8 @@ button:focus {
 }
 
 .input-fields {
+  display: flex;
+  justify-content: center;
   margin-top: 25px;
 }
 
@@ -117,8 +119,8 @@ button:focus {
   /*-webkit-justify-content: center;*/
   /*-ms-flex-pack: center;*/
   /*justify-content: center;*/
-  /*height: 100%;*/
-  margin: 20px;
+  height: 100%;
+  width: 100%;
 }
 
 .content {
@@ -136,20 +138,13 @@ button:focus {
 
 .welcome {
   font-weight: 200;
-  margin-top: 75px;
+  margin-top: 50px;
+  margin-bottom: 30px;
   text-align: center;
   font-size: 40px;
   font-size: 2.5rem;
   letter-spacing: 0px;
   letter-spacing: 0.05rem;
-}
-
-.subtitle {
-  text-align: center;
-  line-height: 1em;
-  font-weight: 100;
-  letter-spacing: 0px;
-  letter-spacing: 0.02rem;
 }
 
 .menu {
@@ -172,8 +167,6 @@ button:focus {
   flex-flow: column;
   box-shadow: 0px 15px 50px 10px rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
-  height: 100%;
-  width: 100%;
   /*height: 560px;*/
   /*width: 360px;*/
   background: black;
@@ -186,22 +179,22 @@ button:focus {
   opacity: 0.95;
   filter: alpha(opacity=95);
   height: 100%;
-  position: absolute;
   width: 100%;
+  position: absolute;
   z-index: 1;
 }
 
 .bold-line {
-  background: #e7e7e7;
-  position: absolute;
-  top: 0px;
-  bottom: 0px;
-  margin: auto;
-  height: 360px;
-  z-index: 1;
-  opacity: 0.1;
-  background: url('https://pexels.imgix.net/photos/27718/pexels-photo-27718.jpg?fit=crop&w=1280&h=823') left no-repeat;
-  background-size: cover;
+  /*background: #e7e7e7;*/
+  /*position: absolute;*/
+  /*top: 0px;*/
+  /*bottom: 0px;*/
+  /*margin: auto;*/
+  /*height: 360px;*/
+  /*z-index: 1;*/
+  /*opacity: 0.1;*/
+  /*background: url('https://pexels.imgix.net/photos/27718/pexels-photo-27718.jpg?fit=crop&w=1280&h=823') left no-repeat;*/
+  /*background-size: cover;*/
 }
 
 @media (max-width: 500px) {
@@ -214,11 +207,4 @@ button:focus {
     width: 100%;
     height: 100%;
   }
-}
-.mat-elevation-z8{
-  width: 600px;
-  margin-bottom: 30px;
-}
-.mat-column-description {
-  width: 30%;
 }

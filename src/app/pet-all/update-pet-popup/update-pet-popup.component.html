@@ -1,0 +1,54 @@
+<div class='bold-line'></div>
+<div class='container'>
+  <div class="background-image">
+    <div class='window'>
+      <div class='overlay'></div>
+      <div class='content'>
+        <div class='welcome'>Редактирай любимец</div>
+        <div class='input-fields'>
+          <form class="form-group " [formGroup]="updateForm" (ngSubmit)="update()">
+            <div class="mb-3">
+              <mat-form-field>
+                <mat-label>Име</mat-label>
+                <input class="input-line full-width" matInput formControlName="name">
+              </mat-form-field>
+            </div>
+            <div class="mb-3" >
+              <mat-form-field>
+                <mat-label class='input-line full-width'>Тип</mat-label>
+                <mat-select formControlName="type">
+                  <mat-option class='input-line full-width' *ngFor="let type of types" [value]="type" >
+                    {{type}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="mb-3" >
+              <mat-form-field>
+                <mat-label class='input-line full-width'>Пол</mat-label>
+                <mat-select formControlName="gender">
+                  <mat-option class='input-line full-width' *ngFor="let gender of genders" [value]="gender" >
+                    {{gender}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="mb-3">
+              <mat-form-field>
+                <mat-label>Години</mat-label>
+                <input class="input-line full-width" matInput formControlName="age">
+              </mat-form-field>
+            </div>
+
+            <div>
+              <button class='ghost-round full-width' type="submit">Обнови</button>
+              <button mat-dialog-close class='ghost-round full-width' >Затвори</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

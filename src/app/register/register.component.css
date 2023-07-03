@@ -81,7 +81,6 @@ button:focus {
 }
 
 .input-line {
-
   background: none;
   margin-bottom: 10px;
   line-height: 2.4em;
@@ -108,19 +107,20 @@ button:focus {
 }
 
 .container {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  height: 100%;
+  margin: 20px;
+  /*display: -webkit-box;*/
+  /*display: -webkit-flex;*/
+  /*display: -ms-flexbox;*/
+  /*display: flex;*/
+  /*-webkit-box-align: center;*/
+  /*-webkit-align-items: center;*/
+  /*-ms-flex-align: center;*/
+  /*align-items: center;*/
+  /*-webkit-box-pack: center;*/
+  /*-webkit-justify-content: center;*/
+  /*-ms-flex-pack: center;*/
+  /*justify-content: center;*/
+  /*height: 100%;*/
 }
 
 .content {
@@ -139,6 +139,7 @@ button:focus {
 .welcome {
   font-weight: 200;
   margin-top: 75px;
+  margin-bottom: 25px;
   text-align: center;
   font-size: 40px;
   font-size: 2.5rem;
@@ -176,6 +177,8 @@ button:focus {
   box-sizing: border-box;
   /*height: 560px;*/
   /*width: 360px;*/
+  height: 100%;
+  width: 360px;
   background: black;
   background: url('https://pexels.imgix.net/photos/27718/pexels-photo-27718.jpg?fit=crop&w=1280&h=823') top left no-repeat;
 }
@@ -203,7 +206,11 @@ button:focus {
   background: url('https://pexels.imgix.net/photos/27718/pexels-photo-27718.jpg?fit=crop&w=1280&h=823') left no-repeat;
   background-size: cover;
 }
-
+.mb-3{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 @media (max-width: 500px) {
   .window {
     width: 100%;
@@ -214,4 +221,5 @@ button:focus {
     width: 100%;
     height: 100%;
   }
+
 }

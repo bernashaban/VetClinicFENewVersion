@@ -8,7 +8,7 @@ import {AuthService} from "./service/auth/auth.service";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements DoCheck{
-  title = 'Vet Clinic Draft';
+  title = 'SuperPets';
   isMenuRequired=false;
   isAdmin=false;
   isVet=false;

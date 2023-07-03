@@ -43,16 +43,12 @@ export class PetService {
     return this.http.get<Pet>(`${this.apiUrl}/${id}`);
   }
 
-  createPet(pet: PetRequest): Observable<Pet> {
+  createPet(pet: any): Observable<Pet> {
     return this.http.post<Pet>(`${this.apiUrl}`, pet);
   }
 
-  // updatePet(id: number, pet: any): Observable<any> {
-  //   return this.http.put(`${this.apiUrl}/${id}`, pet);
-  // }
-
-  updatePet(pet: Pet): Observable<Pet> {
-    return this.http.put<Pet>(`${this.apiUrl}`, pet);
+  updatePet(pet: any, id:any): Observable<Pet> {
+    return this.http.put<Pet>(`${this.apiUrl}/${id}`, pet);
   }
 
   deletePet(id: number): Observable<void> {

@@ -38,6 +38,7 @@ export class AppointmentService {
   private apiUrlOwner = 'http://localhost:8080/appointment/owner';
   private apiUrlVet = 'http://localhost:8080/appointment/vet';
   private apiUrlVetWaiting = 'http://localhost:8080/appointment/vet/waiting';
+  private apiUrlDesc = 'http://localhost:8080/appointment/add-description';
   private status = "UPCOMING";
   constructor(private http: HttpClient) {
   }
@@ -86,5 +87,9 @@ export class AppointmentService {
     let hour =  date.substring(11,13);
     let minute= date.substring(14,16);
     return day + "." + month + "." + year + " - " + hour + ":" + minute;
+  }
+
+  addDescription(description:any, id:any) {
+    return this.http.put(`${this.apiUrlDesc}/${id}`, description);
   }
 }

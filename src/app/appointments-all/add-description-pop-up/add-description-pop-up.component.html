@@ -1,0 +1,37 @@
+<div class='bold-line'></div>
+<div class='container'>
+  <div class="background-image">
+    <div class='window'>
+      <div class='overlay'></div>
+      <div class='content'>
+        <div class='welcome'>Редактиране на услуга</div>
+        <div class='input-fields'>
+          <form class="form-group "  [formGroup]="updateForm" (ngSubmit)="update()">
+                <div class="mb-3">
+                  <mat-form-field>
+                    <mat-label>Диагноза:</mat-label>
+                    <input class="input-line full-width" matInput formControlName="input1">
+                  </mat-form-field>
+                </div>
+                <div class="mb-3">
+                  <mat-form-field>
+                    <mat-label>Манипулация:</mat-label>
+                    <input class="input-line full-width" matInput formControlName="input2">
+                  </mat-form-field>
+                </div>
+                <div class="mb-3">
+                  <mat-form-field>
+                    <mat-label>Медикаменти:</mat-label>
+                    <input class="input-line full-width" matInput formControlName="input3">
+                  </mat-form-field>
+                </div>
+            <div>
+              <button class='ghost-round full-width' type="submit">Запази</button>
+              <button mat-dialog-close class='ghost-round full-width' >Отказ</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

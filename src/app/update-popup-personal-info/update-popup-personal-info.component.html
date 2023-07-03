@@ -1,0 +1,53 @@
+<div class='bold-line'></div>
+<div class='container'>
+  <div class="background-image">
+    <div class='window'>
+      <div class='overlay'></div>
+      <div class='content'>
+        <div class='welcome'>Редактирай</div>
+        <div class='input-fields'>
+          <form class="form-group "  [formGroup]="updateForm" (ngSubmit)="updateUser()">
+            <div class="mb-3">
+              <mat-form-field>
+                <mat-label>Име</mat-label>
+                <input class="input-line full-width" matInput formControlName="fullName">
+              </mat-form-field>
+            </div>
+            <div class="mb-3">
+              <mat-form-field>
+                <mat-label>Потребителско име</mat-label>
+                <input class="input-line full-width" matInput formControlName="username">
+              </mat-form-field>
+            </div>
+            <div class="mb-3">
+              <mat-form-field>
+                <mat-label>Имейл</mat-label>
+                <input class="input-line full-width" matInput formControlName="email">
+              </mat-form-field>
+            </div>
+            <div class="mb-3">
+              <mat-form-field>
+                <mat-label>Парола</mat-label>
+                <input class="input-line full-width" matInput formControlName="password">
+              </mat-form-field>
+            </div>
+            <div>
+              <div class="mb-3">
+                <mat-form-field>
+                  <mat-label>Телефон</mat-label>
+                  <input class="input-line full-width" matInput formControlName="phoneNum">
+                </mat-form-field>
+              </div>
+              <button class='ghost-round full-width' type="submit">Запази</button>
+              <button mat-dialog-close class='ghost-round full-width' >Отказ</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

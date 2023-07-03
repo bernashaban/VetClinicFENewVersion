@@ -9,6 +9,10 @@ import {AuthGuard} from "../../guard/auth.guard";
 import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
+import {AddAssistancePopupComponent} from "../../assistances-all/add-assistance-popup/add-assistance-popup.component";
+import {AddPetPopupComponent} from "../../pet-all/add-pet-popup/add-pet-popup.component";
+import {MatDialog} from "@angular/material/dialog";
+import {UpdatePetPopupComponent} from "../../pet-all/update-pet-popup/update-pet-popup.component";
 
 interface Type {
   value: string;
@@ -40,12 +44,13 @@ export class OwnerProfilePageComponent {
   passedAppointments: any;
   passedAppointmentsDataSource: any;
   displayedColumnsForPet: string[] = ['name', 'age', 'gender', 'type', 'actions'];
-  displayedColumnsForUpcomingAppointment: string[] = ['pet', 'vet', 'date', 'type', 'duration', 'actions'];
+  displayedColumnsForUpcomingAppointment: string[] = ['pet', 'vet', 'date', 'time','type', 'duration', 'actions'];
   displayedColumnsForPassedAppointment: string[] = ['pet', 'vet', 'date', 'type', 'description'];
-
+times:any;
   constructor(private service: AuthService,
               private guard: AuthGuard,
               private router: Router,
+              private dialog: MatDialog,
               private userService: UserService,
               private petService: PetService,
               private appointmentService: AppointmentService) {
@@ -53,8 +58,13 @@ export class OwnerProfilePageComponent {
     this.getUserPets();
     this.getUpcomingAppointments();
     this.getPassedAppointments();
+    this.times = ["9:00","9:30", "10:00", "11:30", "13:00","13:30", "14:30", "15:00", "16:30", "17:00"]
   }
 
+  getRandomTime(){
+    let random = Math.round(Math.random() * 10);
+    return this.times[random]
+  }
   @ViewChild(MatPaginator) petsPaginator !: MatPaginator
   @ViewChild(MatSort) petSort !: MatSort
 
@@ -89,7 +99,14 @@ export class OwnerProfilePageComponent {
   }
 
   onAddPetClicked() {
-    this.router.navigate(['/add-pet']);
+    const popup = this.dialog.open(AddPetPopupComponent,{
+      enterAnimationDuration:'1000ms',
+      exitAnimationDuration:'1000ms',
+      width:'50%',
+    })
+    popup.afterClosed().subscribe(res=>{
+      this.getUserPets();
+    })
   }
 
   getUserPets(): void {
@@ -152,9 +169,17 @@ export class OwnerProfilePageComponent {
   }
 
   update(id: number) {
-    this.petService.deletePet(id).subscribe((data) =>
-      this.getUserPets()
-    );
+    const popup = this.dialog.open(UpdatePetPopupComponent,{
+      enterAnimationDuration:'1000ms',
+      exitAnimationDuration:'1000ms',
+      width:'50%',
+      data:{
+        id:id
+      }
+    })
+    popup.afterClosed().subscribe(res=>{
+      this.getUserPets();
+    })
   }
 
   onDelete(id: number) {
@@ -182,13 +207,11 @@ export class OwnerProfilePageComponent {
 
   getFormattedDescription(description: string) {
     let stringArray = description.split(";")
-    console.log(stringArray)
     let formatted = "";
     for (let i = 0; i < stringArray.length; i++) {
       let currentLine = stringArray[i];
       formatted= formatted+currentLine+";"+'\n';
     }
-    console.log(formatted)
     return formatted
   }
 }
