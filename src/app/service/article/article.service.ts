@@ -9,14 +9,7 @@ export interface Article {
   photoUrl: string;
 }
 
-export class ArticleRequest {
-  constructor(
-    title: string,
-    description: string,
-    photoUrl: string
-  ) {
-  }
-}
+export class ArticleRequest {}
 
 @Injectable({
   providedIn: 'root'

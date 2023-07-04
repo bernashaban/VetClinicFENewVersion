@@ -16,17 +16,6 @@ export interface User {
   photoUrl: string;
 }
 
-export class UserRequest {
-  constructor(
-    public fullName: string,
-    public address: string,
-    public phoneNum: string,
-    public email: string,
-    public username: string,
-    public password: string
-  ) {
-  }
-}
 @Injectable({
   providedIn: 'root'
 })

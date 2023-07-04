@@ -4,11 +4,8 @@ import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {Article, ArticleService} from "../../service/article/article.service";
 import {MatDialog} from "@angular/material/dialog";
-import {UpdatepopupComponent} from "../../updatepopup/updatepopup.component";
 import {AuthService} from "../../service/auth/auth.service";
-import {AssistanceService} from "../../service/assistance/assistance.service";
 import {ToastrService} from "ngx-toastr";
-import {AddAssistancePopupComponent} from "../../assistances-all/add-assistance-popup/add-assistance-popup.component";
 import {AddArticlePopupComponent} from "../add-article-popup/add-article-popup.component";
 import {UpdateArticlePopupComponent} from "../update-article-popup/update-article-popup.component";
 

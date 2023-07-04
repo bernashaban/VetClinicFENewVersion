@@ -1,8 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, Observable} from "rxjs";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {User} from "../user/user.service";
+import {Observable} from "rxjs";
 
 export interface Pet {
   id: number;

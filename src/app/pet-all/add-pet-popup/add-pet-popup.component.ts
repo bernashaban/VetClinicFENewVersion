@@ -10,25 +10,21 @@ import {PetService} from "../../service/pet/pet.service";
   styleUrls: ['./add-pet-popup.component.css']
 })
 export class AddPetPopupComponent {
-  types:any
-  genders:any
+  types: any
+  genders: any
 
   constructor(private builder: FormBuilder,
               private service: PetService,
               @Inject(MAT_DIALOG_DATA) public data: any,
               private toastr: ToastrService,
               private dialog: MatDialogRef<AddPetPopupComponent>) {
-this.types = [ 'котка', 'куче', 'заек', 'друго'];
-this.genders =[ 'мъжки', 'женски'];
+    this.types = ['котка', 'куче', 'заек', 'друго'];
+    this.genders = ['мъжки', 'женски'];
   }
-//  private String name;
-//   private int age;
-//   private int type;
-//   private int gender;
-//   private User owner;
+
   addForm = this.builder.group({
     name: this.builder.control(''),
-    age: this.builder.control('',   Validators.pattern("^[0-9]*$"),),
+    age: this.builder.control('', Validators.pattern("^[0-9]*$"),),
     type: this.builder.control(''),
     gender: this.builder.control(''),
   });
@@ -37,7 +33,7 @@ this.genders =[ 'мъжки', 'женски'];
     if (this.addForm.valid) {
       let request = {
         owner: {
-          id:1
+          id: this.data.ownerId
         },
         name: this.addForm.value.name,
         age: this.addForm.value.age,
@@ -46,6 +42,7 @@ this.genders =[ 'мъжки', 'женски'];
       }
       console.log(request)
       this.service.createPet(request).subscribe(res => {
+        console.log(res)
         this.toastr.success('Успешно добавяне!');
         this.dialog.close();
       });
@@ -53,17 +50,18 @@ this.genders =[ 'мъжки', 'женски'];
       this.toastr.warning('Грешка!')
     }
   }
+
   //  CAT - 1
   //  DOG - 2
   //  RABBIT - 3
   //  OTHER - 4
-  setType(type:any){
-    let ordinal:number;
-    if (type=="котка"){
+  setType(type: any) {
+    let ordinal: number;
+    if (type == "котка") {
       ordinal = 1
-    } else if (type=="куче"){
+    } else if (type == "куче") {
       ordinal = 2
-    } else if (type=="заек"){
+    } else if (type == "заек") {
       ordinal = 3
     } else {
       ordinal = 4
@@ -71,9 +69,9 @@ this.genders =[ 'мъжки', 'женски'];
     return ordinal
   }
 
-  setGender(gender:any){
-    let ordinal:number;
-    if (gender=="мъжки"){
+  setGender(gender: any) {
+    let ordinal: number;
+    if (gender == "мъжки") {
       ordinal = 1
     } else {
       ordinal = 2

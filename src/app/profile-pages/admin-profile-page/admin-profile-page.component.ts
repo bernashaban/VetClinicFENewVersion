@@ -18,11 +18,6 @@ import {ToastrService} from "ngx-toastr";
 })
 
 export class AdminProfilePageComponent {
-  // roles: Role[] = [
-  //   {value: 'ROLE_OWNER', viewValue: 'Потребител'},
-  //   {value: 'ROLE_VET', viewValue: 'Ветеринар'},
-  //   {value: 'ROLE_VET,ROLE_ADMIN', viewValue: 'Администратор'},
-  // ];
   displayedColumns: string[] = ['fullName','phoneNum', 'address', 'username', 'email', 'roles',  'active', 'action'];
   currentUser: User;
   constructor(private service: AuthService, private dialog:MatDialog, private router: Router,private toastr:ToastrService,) {
@@ -83,18 +78,19 @@ export class AdminProfilePageComponent {
       this.loadUser();
     })
   }
+
   updatePersonalInfo(username: any) {
-    const popup = this.dialog.open(UpdatePopupPersonalInfoComponent,{
-      enterAnimationDuration:'1000ms',
-      exitAnimationDuration:'1000ms',
-      width:'50%',
-      data:{
-        username:username
-      }
-    })
-    popup.afterClosed().subscribe(res=>{
-      this.loadUser();
-    })
+      const popup = this.dialog.open(UpdatePopupPersonalInfoComponent, {
+        enterAnimationDuration: '1000ms',
+        exitAnimationDuration: '1000ms',
+        width: '50%',
+        data: {
+          username: username
+        }
+      })
+      popup.afterClosed().subscribe(res => {
+        this.getUserInfo()
+      })
   }
 
   onLogoutClicked() {

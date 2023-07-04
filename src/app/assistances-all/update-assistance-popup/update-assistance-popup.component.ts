@@ -39,7 +39,6 @@ export class UpdateAssistancePopupComponent implements OnInit {
     if (this.data.id != null && this.data.id != '') {
       this.service.getAssistanceById(this.data.id).subscribe(res => {
         this.editData = res;
-        console.log(res)
         this.updateForm.setValue({
           serviceType: this.editData.serviceType, name:this.editData.name, price:this.editData.price
         })

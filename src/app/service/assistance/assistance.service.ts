@@ -1,22 +1,12 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, Observable} from "rxjs";
-import {FormControl, FormGroup} from "@angular/forms";
+import {Observable} from "rxjs";
 
 export interface Assistance {
   id: number;
   serviceType: string;
   name: string;
   price: number;
-}
-
-export class AssistanceRequest {
-  constructor(
-    public serviceType: string,
-    public name: string,
-    public price: number
-  ) {
-  }
 }
 
 @Injectable({

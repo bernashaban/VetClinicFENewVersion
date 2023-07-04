@@ -6,57 +6,52 @@
       <div class='content'>
         <div class='welcome'>Запази час</div>
         <div class='input-fields'>
-          <form class="form-group " [formGroup]="appointmentForm" (ngSubmit)="submitAppointment()">
+          <form class="form-group" [formGroup]="appointmentForm" (ngSubmit)="submitAppointment()">
             <div class="mb-3">
               <mat-form-field>
                 <mat-label class='input-line full-width'>Тип на прегледа:</mat-label>
-                <mat-select>
-                  <mat-option class='input-line full-width' (onSelectionChange)="filterVetsByType(type)" *ngFor="let type of types"
-                               value="type" >{{ type }}</mat-option>
+                <mat-select formControlName="type" [(ngModel)]="type" >
+                  <mat-option class='input-line full-width' (onSelectionChange)="filterVetsByType(type.viewValue)" *ngFor="let type of types" [value]="type.value" >
+                  {{ type.viewValue }}
+                  </mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
-            <div class="mb-3" >
-              <mat-form-field >
+            <div class="mb-3">
+              <mat-form-field>
                 <mat-label class='input-line full-width'>Ветеринар:</mat-label>
-                <mat-select >
-                  <mat-option (select)="selectVet(vet)" class='input-line full-width'
-                              *ngFor="let vet of specVets" value="vet">
-                    Д-р {{ vet.fullName }} </mat-option>
+                <mat-select formControlName="vet" [(ngModel)]="vet" (select)="getVetId()" >
+                  <mat-option class='input-line full-width' *ngFor="let vet of specVets" [value]="vet">
+                    Д-р {{ vet.fullName }}
+                  </mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
-            <div class="mb-3" >
-              <mat-form-field >
+            <div class="mb-3">
+              <mat-form-field>
                 <mat-label class='input-line full-width'>Любимец:</mat-label>
-                <mat-select >
-                  <mat-option class='input-line full-width'
-                              *ngFor="let pet of pets" value="pet">
-                    {{ pet.name }}</mat-option>
+                <mat-select formControlName="pet" [(ngModel)]="pet">
+                  <mat-option class='input-line full-width' *ngFor="let pet of pets" [value]="pet">
+                    {{ pet.name }}
+                  </mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
-<!--            <mat-form-field>-->
-<!--              <mat-label>Дата:</mat-label>-->
-<!--              <input  matInput [matDatepicker]="date" [min]="todayDate">-->
-<!--              <mat-datepicker-toggle matIconSuffix [for]="date" ></mat-datepicker-toggle>-->
-<!--              <mat-datepicker #date  ></mat-datepicker>-->
-<!--            </mat-form-field>-->
             <mat-form-field>
               <mat-label>Дата:</mat-label>
-              <input matInput [matDatepicker]="picker" [min]="todayDate"
-                     (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)"
-                     value="date">
-              <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+              <input matInput [matDatepicker]="picker"
+                      (dateChange)="addEvent('change', $event)"
+                     [min]="todayDate" formControlName="date">
+              <mat-datepicker-toggle matIconSuffix [for]="picker" ></mat-datepicker-toggle>
               <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
-            <div class="mb-3" >
-              <mat-form-field >
+            <div class="mb-3">
+              <mat-form-field>
                 <mat-label class='input-line full-width'>Време:</mat-label>
-                <mat-select >
-                  <mat-option class='input-line full-width'
-                              *ngFor="let time of times" value="time">
-                    {{ time }}</mat-option>
+                <mat-select formControlName="time" [(ngModel)]="time">
+                  <mat-option class='input-line full-width' *ngFor="let time of times" [value]="time">
+                    {{ prettyTime(time) }}
+                  </mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
@@ -66,5 +61,6 @@
       </div>
     </div>
   </div>
+</div>
 
 

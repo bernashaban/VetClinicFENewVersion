@@ -12,7 +12,7 @@
             <p class="input-line ">Телефон: {{ currentUser.phoneNum }}</p>
             <p class="input-line ">Адрес: {{ currentUser.address }}</p>
             <div>
-              <button (click)="updatePersonalInfo(currentUser.id)" class='ghost-round full-width'>Редактирай</button>
+              <button (click)="updatePersonalInfo(currentUser.username)" class='ghost-round full-width'>Редактирай</button>
             </div>
             <mat-form-field class="search-form-field">
               <input matInput [(ngModel)]="searchKey" placeholder="Търсене" autocomplete="off" (keyup)="applyFilter()">

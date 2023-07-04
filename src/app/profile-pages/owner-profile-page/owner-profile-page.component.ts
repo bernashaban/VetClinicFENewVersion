@@ -9,10 +9,10 @@ import {AuthGuard} from "../../guard/auth.guard";
 import {MatSort} from "@angular/material/sort";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
-import {AddAssistancePopupComponent} from "../../assistances-all/add-assistance-popup/add-assistance-popup.component";
 import {AddPetPopupComponent} from "../../pet-all/add-pet-popup/add-pet-popup.component";
 import {MatDialog} from "@angular/material/dialog";
 import {UpdatePetPopupComponent} from "../../pet-all/update-pet-popup/update-pet-popup.component";
+import {UpdatePopupPersonalInfoComponent} from "../../update-popup-personal-info/update-popup-personal-info.component";
 
 interface Type {
   value: string;
@@ -38,15 +38,15 @@ export class OwnerProfilePageComponent {
   ];
   currentUser: any;
   pets: any;
-  petsDataSource:any;
+  petsDataSource: any;
   upcomingAppointments: any;
   upcomingAppointmentsDataSource: any;
   passedAppointments: any;
   passedAppointmentsDataSource: any;
   displayedColumnsForPet: string[] = ['name', 'age', 'gender', 'type', 'actions'];
-  displayedColumnsForUpcomingAppointment: string[] = ['pet', 'vet', 'date', 'time','type', 'duration', 'actions'];
+  displayedColumnsForUpcomingAppointment: string[] = ['pet', 'vet', 'date', 'time', 'type', 'duration', 'actions'];
   displayedColumnsForPassedAppointment: string[] = ['pet', 'vet', 'date', 'type', 'description'];
-times:any;
+
   constructor(private service: AuthService,
               private guard: AuthGuard,
               private router: Router,
@@ -55,16 +55,8 @@ times:any;
               private petService: PetService,
               private appointmentService: AppointmentService) {
     this.getUserInfo();
-    this.getUserPets();
-    this.getUpcomingAppointments();
-    this.getPassedAppointments();
-    this.times = ["9:00","9:30", "10:00", "11:30", "13:00","13:30", "14:30", "15:00", "16:30", "17:00"]
   }
 
-  getRandomTime(){
-    let random = Math.round(Math.random() * 10);
-    return this.times[random]
-  }
   @ViewChild(MatPaginator) petsPaginator !: MatPaginator
   @ViewChild(MatSort) petSort !: MatSort
 
@@ -88,6 +80,9 @@ times:any;
     this.service.getByUsername(this.service.getLoggedIn()).subscribe(
       (response: any) => {
         this.currentUser = response;
+        this.getUserPets();
+        this.getUpcomingAppointments();
+        this.getPassedAppointments();
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -99,18 +94,21 @@ times:any;
   }
 
   onAddPetClicked() {
-    const popup = this.dialog.open(AddPetPopupComponent,{
-      enterAnimationDuration:'1000ms',
-      exitAnimationDuration:'1000ms',
-      width:'50%',
+    const popup = this.dialog.open(AddPetPopupComponent, {
+      enterAnimationDuration: '1000ms',
+      exitAnimationDuration: '1000ms',
+      width: '50%',
+      data:{
+        ownerId:this.currentUser.id
+      }
     })
-    popup.afterClosed().subscribe(res=>{
+    popup.afterClosed().subscribe(res => {
       this.getUserPets();
     })
   }
 
   getUserPets(): void {
-    this.petService.getPetsByOwner(1).subscribe(
+    this.petService.getPetsByOwner(this.currentUser.id).subscribe(
       (response: any) => {
         this.pets = response;
         this.petsDataSource = new MatTableDataSource(this.pets)
@@ -123,7 +121,7 @@ times:any;
   }
 
   getUpcomingAppointments(): void {
-    this.appointmentService.getAllAppointmentsForOwner(1, "UPCOMING").subscribe(
+    this.appointmentService.getAllAppointmentsForOwner(this.currentUser.id, "UPCOMING").subscribe(
       (response: any) => {
         this.upcomingAppointments = response;
         this.upcomingAppointmentsDataSource = new MatTableDataSource(this.upcomingAppointments)
@@ -134,8 +132,9 @@ times:any;
         alert(error.message);
       });
   }
+
   getPassedAppointments(): void {
-    this.appointmentService.getAllAppointmentsForOwner(1, "PASSED").subscribe(
+    this.appointmentService.getAllAppointmentsForOwner(this.currentUser.id, "PASSED").subscribe(
       (response: any) => {
         this.passedAppointments = response;
         this.passedAppointmentsDataSource = new MatTableDataSource(this.passedAppointments)
@@ -169,36 +168,59 @@ times:any;
   }
 
   update(id: number) {
-    const popup = this.dialog.open(UpdatePetPopupComponent,{
-      enterAnimationDuration:'1000ms',
-      exitAnimationDuration:'1000ms',
-      width:'50%',
-      data:{
-        id:id
+    const popup = this.dialog.open(UpdatePetPopupComponent, {
+      enterAnimationDuration: '1000ms',
+      exitAnimationDuration: '1000ms',
+      width: '50%',
+      data: {
+        id: id
       }
     })
-    popup.afterClosed().subscribe(res=>{
+    popup.afterClosed().subscribe(res => {
       this.getUserPets();
     })
   }
 
-  onDelete(id: number) {
+  updatePersonalInfo(username: any) {
+    const popup = this.dialog.open(UpdatePopupPersonalInfoComponent, {
+      enterAnimationDuration: '1000ms',
+      exitAnimationDuration: '1000ms',
+      width: '50%',
+      data: {
+        username: username
+      }
+    })
+    popup.afterClosed().subscribe(res => {
+      this.getUserInfo()
+    })
+  }
+
+  onAppointmentDelete(id: number) {
+    this.appointmentService.deleteAppointment(id).subscribe((data) =>
+      this.getUpcomingAppointments(),
+    );
+  }
+
+  onPetDelete(id: number) {
     this.petService.deletePet(id).subscribe((data) =>
       this.getUserPets()
+
     );
+    this.getUpcomingAppointments()
+    this.getPassedAppointments()
   }
 
   prettyDate(date: string): string {
     let day = date.substring(8);
     let month = date.substring(5, 7);
     let year = date.substring(0, 4);
-    return day + "." + month + "." + year+ "г.";
+    return day + "." + month + "." + year + "г.";
   }
 
   getBgType(type: any) {
     for (let i = 0; i < this.types.length; i++) {
       let currentTypeValue = this.types[i].value;
-      if(currentTypeValue === type){
+      if (currentTypeValue === type) {
         return this.types[i].viewValue;
       }
     }
@@ -210,7 +232,7 @@ times:any;
     let formatted = "";
     for (let i = 0; i < stringArray.length; i++) {
       let currentLine = stringArray[i];
-      formatted= formatted+currentLine+";"+'\n';
+      formatted = formatted + currentLine + ";" + '\n';
     }
     return formatted
   }

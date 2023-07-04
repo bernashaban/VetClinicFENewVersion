@@ -11,8 +11,8 @@
             <p class="input-line ">Потребителско име: {{ currentUser.username }}</p>
             <p class="input-line ">Телефон: {{ currentUser.phoneNum }}</p>
             <p class="input-line ">Адрес: {{ currentUser.address }}</p>
+            <button (click)="updatePersonalInfo(currentUser.username)" class='ghost-round full-width'>Редактирай</button>
             <p class="input-line ">Любимци</p>
-
             <table mat-table matSort [dataSource]="petsDataSource">
 
               <ng-container matColumnDef="name">
@@ -39,7 +39,7 @@
                 <th mat-header-cell *matHeaderCellDef> Редактиране </th>
                 <td mat-cell *matCellDef="let element">
                   <button mat-icon-button color="primary" (click)="update(element.id)"><mat-icon>edit</mat-icon></button>
-                  <button mat-icon-button color="warn" (click)="onDelete(element.id)"><mat-icon>delete_outline</mat-icon></button>
+                  <button mat-icon-button color="warn" (click)="onPetDelete(element.id)"><mat-icon>delete_outline</mat-icon></button>
                 </td>
               </ng-container>
 
@@ -49,6 +49,7 @@
 
             <button (click)="onAddPetClicked()" class='ghost-round '>Добави любимец</button>
             <p class="input-line ">Предстоящи прегледи</p>
+            <div class='spacing'>Имайте предвид, че когато датата на прегледа е минала, това означана, че този преглед чака обработка от ветеринар!</div>
             <table mat-table matSort [dataSource]="upcomingAppointmentsDataSource">
 
               <ng-container matColumnDef="pet">
@@ -68,7 +69,7 @@
 
               <ng-container matColumnDef="time">
                 <th mat-header-cell mat-sort-header *matHeaderCellDef> Начален час </th>
-                <td mat-cell *matCellDef="let element">{{getRandomTime()}}</td>
+                <td mat-cell *matCellDef="let element">{{element.times[0]}}</td>
               </ng-container>
               <ng-container matColumnDef="type">
                 <th mat-header-cell mat-sort-header *matHeaderCellDef> Тип </th>
@@ -82,8 +83,7 @@
               <ng-container matColumnDef="actions"  >
                 <th mat-header-cell *matHeaderCellDef> Изтриване </th>
                 <td mat-cell *matCellDef="let element">
-<!--                  <button mat-icon-button color="primary" (click)="update(element.id)"><mat-icon>edit</mat-icon></button>-->
-                  <button mat-icon-button color="warn" (click)="onDelete(element.id)"><mat-icon>delete_outline</mat-icon></button>
+                  <button mat-icon-button color="warn" (click)="onAppointmentDelete(element.id)"><mat-icon>delete_outline</mat-icon></button>
                 </td>
               </ng-container>
 

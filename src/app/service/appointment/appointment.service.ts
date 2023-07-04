@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, Observable} from "rxjs";
+import {Observable} from "rxjs";
 import {Pet} from "../pet/pet.service";
-import {FormControl, FormGroup} from "@angular/forms";
 import {User} from "../user/user.service";
 
 export interface Appointment {
@@ -73,13 +72,10 @@ export class AppointmentService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-  getFreeHours(vetId:number, date:string):Observable<string[]>{
-    return this.http.get<string[]>(`${this.apiUrl}/${vetId}/${date}`);
+  getFreeHours(vetId:number, date:string, duration:number):Observable<string[]>{
+    return this.http.get<string[]>(`${this.apiUrl}/${vetId}/${date}/${duration}`);
   }
 
-  //0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
-  //2 0 2 3 - 0 5 - 3 1 T  1  1  :  0  0  :  00
-  //31.05.2023 - 11:00
   getPrettyDateTime(date:string): string{
     let day = date.substring(8, 10);
     let month = date.substring(5,7);
