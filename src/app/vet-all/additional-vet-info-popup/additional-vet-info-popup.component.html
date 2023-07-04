@@ -1,0 +1,47 @@
+<div class='bold-line'></div>
+<div class='container'>
+  <div class="background-image">
+    <div class='window'>
+      <div class='overlay'></div>
+      <div class='content'>
+        <div class='welcome'>Редактирай</div>
+        <div class='input-fields'>
+          <form class="form-group "  [formGroup]="updateForm" (ngSubmit)="updateUser()">
+            <div class="mb-3">
+              <mat-form-field>
+                <mat-label>URL към снимка</mat-label>
+                <input class="input-line full-width" matInput formControlName="photoUrl">
+              </mat-form-field>
+            </div>
+            <div class="mb-3">
+              <mat-form-field>
+                <mat-label>Специалност</mat-label>
+                <input class="input-line full-width" matInput formControlName="speciality">
+              </mat-form-field>
+            </div>
+            <div class="mb-3">
+              <mat-form-field>
+                <mat-label>Университет</mat-label>
+                <input class="input-line full-width" matInput formControlName="universityInfo">
+              </mat-form-field>
+            </div>
+            <div class="mb-3">
+              <mat-form-field>
+                <mat-label>Дата на раждане</mat-label>
+                <input class="input-line full-width" matInput formControlName="birthDate">
+              </mat-form-field>
+            </div>
+            <div>
+              <button class='ghost-round full-width' type="submit">Запази</button>
+              <button mat-dialog-close class='ghost-round full-width' >Отказ</button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
